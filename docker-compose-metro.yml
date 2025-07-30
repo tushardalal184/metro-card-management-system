@@ -1,0 +1,32 @@
+version: '3.8'
+services:
+  MetroCardManagement:
+    image: mcms
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: mcms_container
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres_container:5432/metro
+      - SPRING_DATASOURCE_USERNAME=metrouser
+      - SPRING_DATASOURCE_PASSWORD=caspex@123
+    depends_on:
+      - postgres_container
+
+  postgres_container:
+    container_name: postgres_container
+    image: postgres:12
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_USER=metrouser
+      - POSTGRES_PASSWORD=caspex@123
+      - POSTGRES_DB=metro
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
+
