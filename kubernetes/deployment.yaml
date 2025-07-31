@@ -1,1 +1,24 @@
 #Deployment yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: metrocard-app
+  labels:
+    app: metrocard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: metrocard
+  template:
+    metadata:
+      labels:
+        app: metrocard
+    spec:
+      containers:
+        - name: metrocard-container
+          image: mcms
+          imagePullPolicy: Never  # Important for local image
+          ports:
+            - containerPort: 8080
+ 
