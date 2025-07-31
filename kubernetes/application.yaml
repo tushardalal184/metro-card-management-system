@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: metro-card-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/tushardalal184/metro-card-management-system.git'
+    targetRevision: HEAD
+    path: kubernetes
+  destination:
+    server: 'https://kubernetes.default.svc'  # local cluster (Docker Desktop)
+    namespace: metro-card
+  syncPolicy:
+    automated:
+      prune: true  # Deletes resources no longer defined in Git
+      selfHeal: true  # Fixes changes made manually (outside Git)
+    syncOptions:
+      - CreateNamespace=true
